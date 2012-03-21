@@ -8,7 +8,7 @@ namespace GPUPerfNet
 {
     public delegate void GPA_LoggingCallbackPtrType(GPA_Logging_Type messageType, String message);
 
-    public class GPUPerf
+    public class GPUPerfCore
     {
         private const string DLLName = "GPUPerfAPICL.dll";
 

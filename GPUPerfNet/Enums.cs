@@ -36,8 +36,8 @@ namespace GPUPerfNet
         GPA_STATUS_ERROR_HARDWARE_NOT_SUPPORTED
     }
     
-    public enum GPA_TYPE : int {
-       GPA_TYPE_FLOAT32,             ///< Result will be a 32-bit float
+    public enum GPA_Type {
+       GPA_TYPE_FLOAT32 = 0,             ///< Result will be a 32-bit float
        GPA_TYPE_FLOAT64,             ///< Result will be a 64-bit float
        GPA_TYPE_UINT32,              ///< Result will be a 32-bit unsigned int
        GPA_TYPE_UINT64,              ///< Result will be a 64-bit unsigned int
