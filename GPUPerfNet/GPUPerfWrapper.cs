@@ -12,7 +12,7 @@ namespace GPUPerfNet
     {
         private const string DLLName = "GPUPerfAPICL.dll";
 
-        [DllImport(DLLName, EntryPoint = "GPA_RegisterLoggingCallback")]      
+        [DllImport(DLLName, EntryPoint = "GPA_RegisterLoggingCallback", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_RegisterLoggingCallback(GPA_Logging_Type loggingType, GPA_LoggingCallbackPtrType callbackFuncPtr );
 
         // Init / destroy GPA
@@ -22,14 +22,14 @@ namespace GPUPerfNet
         /// This function must be called before the rendering context or device is created.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
         /// 
-        [DllImport(DLLName, EntryPoint = "GPA_Initialize")]      
+        [DllImport(DLLName, EntryPoint = "GPA_Initialize", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_Initialize();
 
         /// \brief Undo any initialization to ensure proper behavior in applications that are not being profiled.
         ///
         /// This function must be called after the rendering context or device is released / destroyed.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_Destroy")]      
+        [DllImport(DLLName, EntryPoint = "GPA_Destroy", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_Destroy();
 
         // Context Startup / Finish
@@ -39,14 +39,14 @@ namespace GPUPerfNet
         /// This function must be called before any other GPA functions.
         /// \param context The context to open counters for. Typically a device pointer. Refer to GPA API specific documentation for further details.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_OpenContext")]      
+        [DllImport(DLLName, EntryPoint = "GPA_OpenContext", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_OpenContext(IntPtr context);
 
         /// \brief Closes the counters in the currently active context.
         ///
         /// GPA functions should not be called again until the counters are reopened with GPA_OpenContext.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_CloseContext")]      
+        [DllImport(DLLName, EntryPoint = "GPA_CloseContext", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_CloseContext();
 
         /// \brief Select another context to be the currently active context.
@@ -55,7 +55,7 @@ namespace GPUPerfNet
         /// If the call is successful, all GPA functions will act on the currently selected context.
         /// \param context The context to select. The same value that was passed to GPA_OpenContext.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_SelectContext")]      
+        [DllImport(DLLName, EntryPoint = "GPA_SelectContext", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_SelectContext(IntPtr context);
 
 
@@ -65,7 +65,7 @@ namespace GPUPerfNet
         ///
         /// \param count The value which will hold the count upon successful execution.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetNumCounters")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetNumCounters", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetNumCounters(out uint count);
 
         /// \brief Get the name of a specific counter.
@@ -73,7 +73,7 @@ namespace GPUPerfNet
         /// \param index The index of the counter name to query. Must lie between 0 and (GPA_GetNumCounters result - 1).
         /// \param name The value which will hold the name upon successful execution.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetCounterName")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetCounterName", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetCounterName(uint index, out String name);
 
         /// \brief Get description of the specified counter.
@@ -81,7 +81,7 @@ namespace GPUPerfNet
         /// \param index The index of the counter to query. Must lie between 0 and (GPA_GetNumCounters result - 1).
         /// \param description The value which will hold the description upon successful execution.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetCounterDescription")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetCounterDescription", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetCounterDescription(uint index, out String name);
 
         /// \brief Get the counter data type of the specified counter.
@@ -89,7 +89,7 @@ namespace GPUPerfNet
         /// \param index The index of the counter. Must lie between 0 and (GPA_GetNumCounters result - 1).
         /// \param counterDataType The value which will hold the description upon successful execution.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetCounterDataType")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetCounterDataType", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetCounterDataType(uint index, out GPA_Type counterDataType );
 
         /// \brief Get the counter usage type of the specified counter.
@@ -97,7 +97,7 @@ namespace GPUPerfNet
         /// \param index The index of the counter. Must lie between 0 and (GPA_GetNumCounters result - 1).
         /// \param counterUsageType The value which will hold the description upon successful execution.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetCounterUsageType")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetCounterUsageType", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetCounterUsageType(uint index, out GPA_Usage_Type counterUsageType );
 
         /// \brief Get a string with the name of the specified counter data type.
@@ -107,7 +107,7 @@ namespace GPUPerfNet
         /// \param counterDataType The type to get the string for.
         /// \param typeStr The value that will be set to contain a reference to the name of the counter data type.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetDataTypeAsStr")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetDataTypeAsStr", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetDataTypeAsStr( GPA_Type counterDataType, out String name);
 
         /// \brief Get a string with the name of the specified counter usage type.
@@ -117,7 +117,7 @@ namespace GPUPerfNet
         /// \param counterUsageType The type to get the string for.
         /// \param usageTypeStr The value that will be set to contain a reference to the name of the counter usage type.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetUsageTypeAsStr")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetUsageTypeAsStr", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetUsageTypeAsStr(GPA_Usage_Type counterUsageType, out String name);
 
         /// \brief Enable a specified counter.
@@ -126,7 +126,7 @@ namespace GPUPerfNet
         /// Initially all counters are disabled, and must explicitly be enabled by calling this function.
         /// \param index The index of the counter to enable. Must lie between 0 and (GPA_GetNumCounters result - 1).
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_EnableCounter")]      
+        [DllImport(DLLName, EntryPoint = "GPA_EnableCounter", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_EnableCounter(uint index);
 
 
@@ -136,7 +136,7 @@ namespace GPUPerfNet
         /// Initially all counters are disabled, and must explicitly be enabled.
         /// \param index The index of the counter to enable. Must lie between 0 and (GPA_GetNumCounters result - 1).
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_DisableCounter")]      
+        [DllImport(DLLName, EntryPoint = "GPA_DisableCounter", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_DisableCounter(uint index);
 
 
@@ -144,7 +144,7 @@ namespace GPUPerfNet
         ///
         /// \param count The value that will be set to the number of counters that are currently enabled.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetEnabledCount")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetEnabledCount", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetEnabledCount(out uint count);
 
 
@@ -155,7 +155,7 @@ namespace GPUPerfNet
         /// \param enabledNumber The number of the enabled counter to get the counter index for. Must lie between 0 and (GPA_GetEnabledIndex result - 1).
         /// \param enabledCounterIndex The value that will contain the index of the counter.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetEnabledIndex")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetEnabledIndex", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetEnabledIndex(uint enabledNumber, out uint enabledCounterIndex);
 
 
@@ -163,7 +163,7 @@ namespace GPUPerfNet
         ///
         /// \param counterIndex The index of the counter. Must lie between 0 and (GPA_GetNumCounters result - 1).
         /// \return GPA_STATUS_OK is returned if the counter is enabled, GPA_STATUS_ERROR_NOT_FOUND otherwise.
-        [DllImport(DLLName, EntryPoint = "GPA_IsCounterEnabled")]      
+        [DllImport(DLLName, EntryPoint = "GPA_IsCounterEnabled", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_IsCounterEnabled(uint counterIndex);
 
 
@@ -173,7 +173,7 @@ namespace GPUPerfNet
         /// Initially all counters are disabled, and must explicitly be enabled by calling this function.
         /// \param counter The name of the counter to enable.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_EnableCounterStr")]      
+        [DllImport(DLLName, EntryPoint = "GPA_EnableCounterStr", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_EnableCounterStr(String counter);
 
 
@@ -183,7 +183,7 @@ namespace GPUPerfNet
         /// Initially all counters are disabled, and must explicitly be enabled.
         /// \param counter The name of the counter to disable.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_DisableCounterStr")]      
+        [DllImport(DLLName, EntryPoint = "GPA_DisableCounterStr", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_DisableCounterStr(String counter);
 
 
@@ -192,7 +192,7 @@ namespace GPUPerfNet
         /// Subsequent sampling sessions will provide values for all counters.
         /// Initially all counters are disabled, and must explicitly be enabled by calling a function which enables them.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_EnableAllCounters")]      
+        [DllImport(DLLName, EntryPoint = "GPA_EnableAllCounters", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_EnableAllCounters();
 
 
@@ -201,7 +201,7 @@ namespace GPUPerfNet
         /// Subsequent sampling sessions will not provide values for any disabled counters.
         /// Initially all counters are disabled, and must explicitly be enabled.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_DisableAllCounters")]      
+        [DllImport(DLLName, EntryPoint = "GPA_DisableAllCounters", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_DisableAllCounters();
 
 
@@ -210,7 +210,7 @@ namespace GPUPerfNet
         /// \param counter The name of the counter to get the index for.
         /// \param index The index of the requested counter.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetCounterIndex")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetCounterIndex", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetCounterIndex(String counter, out uint index);
 
 
@@ -220,7 +220,7 @@ namespace GPUPerfNet
         /// On each pass a different (compatible) set of counters will be measured.
         /// \param numPasses The value of the number of passes.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetPassCount")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetPassCount", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetPassCount(out uint numPasses);
 
 
@@ -232,14 +232,14 @@ namespace GPUPerfNet
         /// The set of enabled counters cannot be changed inside a BeginSession/EndSession sequence.
         /// \param sessionID The value that will be set to the session identifier.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_BeginSession")]      
+        [DllImport(DLLName, EntryPoint = "GPA_BeginSession", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_BeginSession(out uint sessionID);
 
 
         /// \brief End sampling with the currently enabled set of counters.
         ///
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_EndSession")]      
+        [DllImport(DLLName, EntryPoint = "GPA_EndSession", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_EndSession();
 
 
@@ -250,7 +250,7 @@ namespace GPUPerfNet
         /// The number of required passes can be determined by enabling a set of counters and then calling GPA_GetPassCount.
         /// The operations inside the BeginPass/EndPass calls should be looped over GPA_GetPassCount result number of times.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_BeginPass")]      
+        [DllImport(DLLName, EntryPoint = "GPA_BeginPass", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_BeginPass();
 
 
@@ -262,7 +262,7 @@ namespace GPUPerfNet
         /// The operations inside the BeginPass/EndPass calls should be looped over GPA_GetPassCount result number of times.
         /// This is necessary to capture all counter values, since sometimes counter combinations cannot be captured simultaneously.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_EndPass")]      
+        [DllImport(DLLName, EntryPoint = "GPA_EndPass", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_EndPass();
 
 
@@ -275,7 +275,7 @@ namespace GPUPerfNet
         /// BeginSample must be followed by a call to EndSample before BeginSample is called again.
         /// \param sampleID Any integer, unique within the BeginSession/EndSession sequence, used to retrieve the sample results.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_BeginSample")]      
+        [DllImport(DLLName, EntryPoint = "GPA_BeginSample", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_BeginSample(uint sampleID );
 
 
@@ -283,7 +283,7 @@ namespace GPUPerfNet
         ///
         /// BeginSample must be followed by a call to EndSample before BeginSample is called again.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_EndSample")]      
+        [DllImport(DLLName, EntryPoint = "GPA_EndSample", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_EndSample();
 
         /// \brief Get the number of samples a specified session contains.
@@ -292,7 +292,7 @@ namespace GPUPerfNet
         /// \param sessionID The session to get the number of samples for.
         /// \param samples The value that will be set to the number of samples contained within the session.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetSampleCount")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetSampleCount", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetSampleCount(uint sessionID, out uint samples);
 
 
@@ -307,7 +307,7 @@ namespace GPUPerfNet
         /// \param sessionID The session containing the sample to determine availability.
         /// \param sampleID The sample identifier of the sample to query availability for.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_IsSampleReady")]      
+        [DllImport(DLLName, EntryPoint = "GPA_IsSampleReady", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_IsSampleReady(out bool readyResult, uint sessionID, uint sampleID);
 
 
@@ -320,7 +320,7 @@ namespace GPUPerfNet
         /// \param readyResult The value that will contain the result of the session being ready. True if ready.
         /// \param sessionID The session to determine availability for.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_IsSessionReady")]      
+        [DllImport(DLLName, EntryPoint = "GPA_IsSessionReady", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_IsSessionReady(out bool readyResult, uint sessionID);
 
 
@@ -333,7 +333,7 @@ namespace GPUPerfNet
         /// \param counterID The counter index to get the result for.
         /// \param result The value which will contain the counter result upon successful execution.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetSampleUInt64")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetSampleUInt64", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetSampleUInt64(uint sessionID, uint sampleID, uint counterID, out long result);
 
 
@@ -346,7 +346,7 @@ namespace GPUPerfNet
         /// \param counterIndex The counter index to get the result for.
         /// \param result The value which will contain the counter result upon successful execution.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetSampleUInt32")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetSampleUInt32", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetSampleUInt32(uint sessionID, uint sampleID, uint counterIndex, out uint result);
 
 
@@ -359,7 +359,7 @@ namespace GPUPerfNet
         /// \param counterIndex The counter index to get the result for.
         /// \param result The value which will contain the counter result upon successful execution.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetSampleFloat64")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetSampleFloat64", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetSampleFloat64(uint sessionID, uint sampleID, uint counterIndex, out double result );
 
 
@@ -372,7 +372,7 @@ namespace GPUPerfNet
         /// \param counterIndex The counter index to get the result for.
         /// \param result The value which will contain the counter result upon successful execution.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
-        [DllImport(DLLName, EntryPoint = "GPA_GetSampleFloat32")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetSampleFloat32", CallingConvention = CallingConvention.Cdecl)]      
         public extern static GPA_Status GPA_GetSampleFloat32(uint sessionID, uint sampleID, uint counterIndex, out float result);
 
 
@@ -381,7 +381,7 @@ namespace GPUPerfNet
         /// Provides a simple method to convert a status enum value into a string which can be used to display log messages.
         /// \param status The status to convert into a string.
         /// \return A string which describes the supplied status.
-        [DllImport(DLLName, EntryPoint = "GPA_GetStatusAsStr")]      
+        [DllImport(DLLName, EntryPoint = "GPA_GetStatusAsStr", CallingConvention = CallingConvention.Cdecl)]      
         public extern static String GPA_GetStatusAsStr(uint status);
     }
 }

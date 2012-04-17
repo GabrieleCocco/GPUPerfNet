@@ -7,12 +7,12 @@ namespace Tester
 {
     class Program
     {
-            static KeyPiProfiler profiler = new KeyPiProfiler();
+        static KeyPiProfiler profiler;
         static void Main(string[] args)
         {
-
+            //Args to initialized the DLL
             String[] dllArgs = new String[] {
-		        "16777216", 
+		        "33554432", 
 		        "10", 
 		        "1", 
 		        "2.0", 
@@ -25,44 +25,48 @@ namespace Tester
 		        "0", "128", "MEMORY_MODE_HOST_MAP", "MEMORY_MODE_HOST_MAP", "saxpy4",
 		        "test_saxpy.csv",
 		        "0" };
-            profiler.OpenDllKernel(
-                "KeyPiTestDll.dll",
-                dllArgs);
             
+            //Create e profiler for a DLL
+            profiler = new KeyPiProfiler(
+                "Saxpy",
+                "SaxpyLib.dll",
+                dllArgs);
+
+            //Open the kernel associated tot he profiler (so contexts are opened)
+            profiler.OpenKernel();
+
             /* Setup sessions */
-            profiler.RunAll(Callback);
+            //Enable all counters
+            profiler.CurrentContext.EnableAllCounters();
+            
+            //One session, number fo passes = #passes needed to computer the counters enabled
+            int session_id = profiler.BeginSession();
+            for (int i = 0; i < profiler.CurrentContext.RequiredPassCount; i++)
+            {
+                profiler.BeginPass();
+                profiler.BeginSample(0);
+                profiler.Run();
+                profiler.EndSample();
+                profiler.EndPass();
+            }
+            profiler.EndSession();
+
+            //Wait for the values of the counters to be ready
+            while (!profiler.IsSampleReady(session_id, 0)) { }
+
+            //Print the counters values to the screen
+            for (int i = 0; i < profiler.CurrentContext.EnabledCountersCount; i++)
+            {
+                KeyPiCounter counter = profiler.CurrentContext.Counters(i);
+                Console.WriteLine(counter.Name + "[TYPE " + counter.DataType + "] = " + counter.Value(session_id, 0));
+            }
+            profiler.CloseKernel();
         }
 
         static void Callback(string dll, KeyPiDllKernelExecutionInfo result)
         {
             Console.WriteLine(dll + ":" + result.Result);
             Console.Read();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 }
