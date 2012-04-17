@@ -47,10 +47,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GPUPerfNet\GPUPerfNet.csproj">
-      <Project>{29BCD3E7-CAB7-4279-ADC3-D21372BBCE94}</Project>
-      <Name>GPUPerfNet</Name>
+    <ProjectReference Include="..\KeyPi\KeyPi.csproj">
+      <Project>{D0AFBDAA-07C7-4FE5-BA8A-F1B14D40C1F4}</Project>
+      <Name>KeyPi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

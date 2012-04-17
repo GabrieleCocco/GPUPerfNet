@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GPUPerfCore.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="GPUPerfWrapper.cs" />
+    <Compile Include="GPUPerfEnums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

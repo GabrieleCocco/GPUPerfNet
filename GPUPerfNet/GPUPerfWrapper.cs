@@ -8,7 +8,7 @@ namespace GPUPerfNet
 {
     public delegate void GPA_LoggingCallbackPtrType(GPA_Logging_Type messageType, String message);
 
-    public class GPUPerfCore
+    public class GPUPerfWrapper
     {
         private const string DLLName = "GPUPerfAPICL.dll";
 
@@ -56,7 +56,7 @@ namespace GPUPerfNet
         /// \param context The context to select. The same value that was passed to GPA_OpenContext.
         /// \return The GPA result status of the operation. GPA_STATUS_OK is returned if the operation is successful.
         [DllImport(DLLName, EntryPoint = "GPA_SelectContext")]      
-        public extern static GPA_Status GPA_SelectContext(IntPtr context );
+        public extern static GPA_Status GPA_SelectContext(IntPtr context);
 
 
         // Counter Interrogation
