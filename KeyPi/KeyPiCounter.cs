@@ -19,8 +19,6 @@ namespace KeyPi
 
     public class KeyPiCounter
     {
-        private bool enable;
-
         public int Index
         {
             get;
@@ -61,15 +59,13 @@ namespace KeyPi
             }
             set
             {
-                if (value == true && !enable)
+                if (value == true && !IsEnable)
                 {
                     KeyPiException.CheckOrThrow(GPUPerfWrapper.GPA_EnableCounter((uint)Index), "Cannot enable the counter " + Index);
-                    enable = value;
                 }
-                if (value == false && enable)
+                if (value == false && IsEnable)
                 {
-                    KeyPiException.CheckOrThrow(GPUPerfWrapper.GPA_DisableCounter((uint)Index), "Cannot siable the counter " + Index);
-                    enable = value;
+                    KeyPiException.CheckOrThrow(GPUPerfWrapper.GPA_DisableCounter((uint)Index), "Cannot disable the counter " + Index);
                 }
             }
         }
@@ -160,7 +156,6 @@ namespace KeyPi
         public KeyPiCounter(int index)
         {
             this.Index = index;
-            this.enable = false;
         }
     }
 }

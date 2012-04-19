@@ -39,4 +39,11 @@ namespace KeyPi
             Milliseconds = (short)dt.Millisecond;
         }
     }
+
+    [StructLayout(LayoutKind.Sequential)]    
+    internal struct CommandQueueInfo
+    {
+        internal IntPtr queue;
+        internal IntPtr name;
+    }
 }

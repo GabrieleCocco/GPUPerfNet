@@ -51,10 +51,9 @@ namespace KeyPi
         delegate void KeyPiDllInternalRun(out SYSTEMTIME start, out SYSTEMTIME end, out int result);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void KeyPiDllInternalInit(
-            int argc, 
-            [In] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr, SizeParamIndex = 1)] String[] argv,
-            out IntPtr queues,
-            out IntPtr queues_names, 
+            int argc,
+            [In] [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr, SizeParamIndex = 0)] String[] argv,
+            ref IntPtr queues,
             out int queues_count);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void KeyPiDllInternalRelease();
@@ -93,17 +92,16 @@ namespace KeyPi
             InternalRelease = (KeyPiDllInternalRelease)Marshal.GetDelegateForFunctionPointer(pAddressOfFunctionToCall, typeof(KeyPiDllInternalRelease));
 
             IntPtr queues_pointer = IntPtr.Zero;
-            int queues_count = 0;
-            IntPtr queues_names_pointer = IntPtr.Zero;
-            InternalInit(args.Length, args, out queues_pointer, out queues_names_pointer, out queues_count);
-
-            IntPtr[] queues_names = new IntPtr[queues_count];
-            IntPtr[] queues = new IntPtr[queues_count];
-            Marshal.Copy(queues_names_pointer, queues_names, 0, queues_count);
-            Marshal.Copy(queues_pointer, queues, 0, queues_count);
+            int queues_count;
+            InternalInit(args.Length, args, ref queues_pointer, out queues_count);
+            
             List<KeyPiContext> contexts = new List<KeyPiContext>();
-            for (int i = 0; i < queues_count; i++) 
-                contexts.Add(new KeyPiContext(Marshal.PtrToStringAnsi(queues_names[i]), queues[i]));
+            for(int i = 0; i < queues_count; i++) 
+            {
+                CommandQueueInfo info = (CommandQueueInfo)Marshal.PtrToStructure(queues_pointer, typeof(CommandQueueInfo));
+                contexts.Add(new KeyPiContext(Marshal.PtrToStringAnsi(info.name), info.queue));
+                queues_pointer += Marshal.SizeOf(typeof(CommandQueueInfo));
+            }
 
             this.Contexts = new Dictionary<string, KeyPiContext>();
             foreach (KeyPiContext context in contexts)

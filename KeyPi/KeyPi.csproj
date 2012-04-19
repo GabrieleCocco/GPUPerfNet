@@ -47,7 +47,7 @@
     <Compile Include="KeyPiCounter.cs" />
     <Compile Include="KeyPiDllKernel.cs" />
     <Compile Include="KeyPiException.cs" />
-    <Compile Include="KeyPiUtil.cs" />
+    <Compile Include="KeyPiInterop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

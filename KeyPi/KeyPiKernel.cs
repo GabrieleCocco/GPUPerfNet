@@ -26,9 +26,12 @@ namespace KeyPi
         }
 
         internal virtual void Open()
-        {            
+        {
             foreach (KeyPiContext context in Contexts.Values)
-                KeyPiException.CheckOrThrow(GPUPerfWrapper.GPA_OpenContext(context.ContextReference), "Cannot open the context " + context.Name);                
+            {
+                GPA_Status status = GPUPerfWrapper.GPA_OpenContext(context.ContextReference);
+                KeyPiException.CheckOrThrow(status, "Cannot open the context " + context.Name);
+            }
         }
 
         internal virtual void Close()
